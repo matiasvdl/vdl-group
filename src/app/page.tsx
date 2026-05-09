@@ -5,12 +5,23 @@ import {
   Container,
   Flex,
   Heading,
+  Link as ChakraLink,
   SimpleGrid,
   Text,
 } from "@chakra-ui/react";
 import { SiteFooter } from "@/components/store/site-footer";
 import { SiteHeader } from "@/components/store/site-header";
-import { ArrowRight, Barcode, ChevronDown, CreditCard, Printer } from "lucide-react";
+import {
+  ArrowRight,
+  Barcode,
+  ClipboardList,
+  Clock,
+  CreditCard,
+  Printer,
+  ShieldCheck,
+  Tag,
+  Truck,
+} from "lucide-react";
 import Link from "next/link";
 
 const categories = [
@@ -18,21 +29,18 @@ const categories = [
     icon: Barcode,
     title: "Captura de datos",
     text: "Lectores de código, terminales móviles, impresoras de etiquetas y consumibles para operación en terreno.",
-    accent: "#0f766e",
     href: "/catalogo",
   },
   {
     icon: CreditCard,
     title: "Punto de venta",
     text: "Hardware POS para comercio, bodega y caja: terminales, cajones monederos, displays y kits completos.",
-    accent: "#4f46e5",
     href: "/catalogo",
   },
   {
     icon: Printer,
     title: "Impresión",
     text: "Impresoras térmicas, de etiquetas, multifuncionales e insumos para procesos comerciales y logísticos.",
-    accent: "#b45309",
     href: "/catalogo",
   },
 ];
@@ -55,26 +63,32 @@ const quoteRows = [
 
 const faqs = [
   {
+    icon: Tag,
     q: "¿Por qué no muestran precios en el sitio?",
     a: "Los precios cambian a diario por variación del dólar, disponibilidad de stock y volumen del pedido. Cotizar al momento garantiza un valor exacto y actualizado, sin sorpresas para tu empresa.",
   },
   {
+    icon: Clock,
     q: "¿Cuánto demoran en responder una cotización?",
     a: "Entre 24 y 48 horas hábiles desde recibida la solicitud. Si necesitas una respuesta más rápida, indícalo en el mensaje y priorizamos tu caso.",
   },
   {
+    icon: ClipboardList,
     q: "¿Qué incluye la cotización formal?",
     a: "Disponibilidad y stock, plazo de entrega, valor en CLP y USD, formas de pago aceptadas, condiciones de garantía y la validez del documento.",
   },
   {
+    icon: Truck,
     q: "¿Realizan despacho a todo Chile?",
     a: "Sí. Coordinamos despachos a Santiago y regiones según peso, urgencia y volumen del pedido. El costo de envío se incluye dentro de la misma cotización.",
   },
   {
+    icon: CreditCard,
     q: "¿Qué formas de pago aceptan?",
     a: "Transferencia electrónica y depósito. Para empresas, previa evaluación comercial, también ofrecemos factura a 30 días.",
   },
   {
+    icon: ShieldCheck,
     q: "¿Los productos tienen garantía?",
     a: "Sí. Todos los productos cuentan con garantía oficial del fabricante. Validamos el plazo y el alcance de cobertura antes de emitir la cotización.",
   },
@@ -329,17 +343,18 @@ export default function Home() {
                       boxShadow: "0 18px 42px rgba(17,21,28,0.10)",
                     }}
                   >
-                    <Box
+                    <Flex
                       w="48px"
                       h="48px"
-                      rounded="xl"
-                      bg={`${cat.accent}1A`}
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
+                      rounded="lg"
+                      borderWidth="1px"
+                      borderColor="#d2d6dc"
+                      bg="white"
+                      align="center"
+                      justify="center"
                     >
-                      <Icon size={22} color={cat.accent} />
-                    </Box>
+                      <Icon size={22} color="#11151c" />
+                    </Flex>
                     <Heading as="h3" mt="5" fontSize="xl">
                       {cat.title}
                     </Heading>
@@ -368,83 +383,115 @@ export default function Home() {
       <Box bg="#e7eaee" borderTopWidth="1px" borderColor="#d8dbe2" mt={{ base: 10, md: 14 }}>
         <Container maxW="1180px" px={{ base: 4, md: 5 }} py={{ base: 10, md: 14 }}>
         <Box id="faq">
-          <Flex direction={{ base: "column", lg: "row" }} gap={{ base: 6, lg: 16 }} align="start">
-            <Box flexShrink={0} w={{ base: "full", lg: "300px" }}>
-              <Text
-                fontSize="xs"
-                fontWeight="bold"
-                textTransform="uppercase"
-                letterSpacing="0.2em"
-                color="#7b8491"
+          <Box maxW="720px" mb={{ base: 8, md: 12 }}>
+            <Heading
+              as="h2"
+              fontSize={{ base: "3xl", md: "4xl" }}
+              letterSpacing="-0.03em"
+              lineHeight="1.1"
+            >
+              Preguntas frecuentes
+            </Heading>
+            <Text mt="3" color="#5d6572" fontSize={{ base: "sm", md: "md" }} lineHeight="1.7">
+              Todo lo que necesitas saber sobre cotizaciones, despacho y formas de pago. Si no
+              encuentras respuesta a tu duda,{" "}
+              <ChakraLink
+                href="mailto:ventas@vdlgroup.cl"
+                color="#11151c"
+                fontWeight="medium"
+                textDecoration="underline"
+                textUnderlineOffset="3px"
+                _hover={{ color: "#11151c" }}
               >
-                Preguntas frecuentes
-              </Text>
-              <Heading
-                as="h2"
-                mt="3"
-                fontSize={{ base: "2xl", md: "3xl" }}
-                letterSpacing="-0.03em"
-                lineHeight="1.1"
-              >
-                Lo que más nos preguntan
-              </Heading>
-              <Text mt="3" color="#5d6572" fontSize="sm" lineHeight="1.7">
-                Resolvemos las consultas más comunes sobre cotizaciones, despacho y formas de pago.
-              </Text>
-            </Box>
+                escríbenos al equipo comercial
+              </ChakraLink>
+              .
+            </Text>
+          </Box>
 
-            <Flex direction="column" gap="2.5" flex="1" w={{ base: "full" }} maxW={{ lg: "780px" }}>
-              {faqs.map((faq) => (
-                <Box
-                  as="details"
-                  key={faq.q}
-                  bg="white"
-                  rounded="xl"
-                  borderWidth="1px"
-                  borderColor="#e5e7ec"
-                  transition="border-color .15s ease"
-                  _hover={{ borderColor: "#d2d6dc" }}
-                  _open={{ borderColor: "#11151c" }}
-                  className="group"
-                >
-                  <Box
-                    as="summary"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="space-between"
-                    gap="4"
-                    cursor="pointer"
-                    listStyleType="none"
-                    px="5"
-                    py="3.5"
-                    className="[&::-webkit-details-marker]:hidden"
+          <SimpleGrid
+            columns={{ base: 1, md: 2, lg: 3 }}
+            rowGap={{ base: 8, md: 10 }}
+            columnGap={{ md: 8, lg: 12 }}
+          >
+            {faqs.map((faq) => {
+              const Icon = faq.icon;
+
+              return (
+                <Box key={faq.q}>
+                  <Flex
+                    w="44px"
+                    h="44px"
+                    rounded="lg"
+                    borderWidth="1px"
+                    borderColor="#d2d6dc"
+                    bg="white"
+                    align="center"
+                    justify="center"
                   >
-                    <Text
-                      fontSize={{ base: "sm", md: "md" }}
-                      fontWeight="semibold"
-                      color="#11151c"
-                    >
-                      {faq.q}
-                    </Text>
-                    <Box
-                      as="span"
-                      color="#9ca3af"
-                      flexShrink="0"
-                      transition="transform 0.2s ease"
-                      className="group-open:rotate-180"
-                    >
-                      <ChevronDown size={16} />
-                    </Box>
-                  </Box>
-                  <Box px="5" pb="4">
-                    <Text fontSize="sm" color="#5d6572" lineHeight="1.7">
-                      {faq.a}
-                    </Text>
-                  </Box>
+                    <Icon size={18} color="#11151c" />
+                  </Flex>
+                  <Heading
+                    as="h3"
+                    mt="5"
+                    fontSize="md"
+                    fontWeight="bold"
+                    color="#11151c"
+                    lineHeight="1.4"
+                  >
+                    {faq.q}
+                  </Heading>
+                  <Text mt="2" fontSize="sm" color="#5d6572" lineHeight="1.7">
+                    {faq.a}
+                  </Text>
                 </Box>
-              ))}
+              );
+            })}
+          </SimpleGrid>
+
+          <Box
+            mt={{ base: 10, md: 14 }}
+            bg="white"
+            borderWidth="1px"
+            borderColor="#d8dbe2"
+            rounded="2xl"
+            px={{ base: 5, md: 8 }}
+            py={{ base: 5, md: 6 }}
+          >
+            <Flex
+              direction={{ base: "column", md: "row" }}
+              justify="space-between"
+              align={{ md: "center" }}
+              gap={{ base: 4, md: 6 }}
+            >
+              <Box>
+                <Heading
+                  as="h3"
+                  fontSize={{ base: "md", md: "lg" }}
+                  fontWeight="bold"
+                  color="#11151c"
+                >
+                  ¿Tienes más dudas?
+                </Heading>
+                <Text mt="1" fontSize="sm" color="#5d6572" lineHeight="1.6">
+                  ¿No encuentras la respuesta que buscas? Escríbenos al equipo comercial.
+                </Text>
+              </Box>
+              <Button
+                asChild
+                h="42px"
+                px="6"
+                rounded="lg"
+                bg="#11151c"
+                color="white"
+                fontWeight="semibold"
+                _hover={{ bg: "#2a303b" }}
+                flexShrink="0"
+              >
+                <Link href="mailto:ventas@vdlgroup.cl">Contactar</Link>
+              </Button>
             </Flex>
-          </Flex>
+          </Box>
         </Box>
 
         <Box
