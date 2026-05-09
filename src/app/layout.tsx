@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Barlow, Inter } from "next/font/google";
+import { Provider } from "@/components/chakra-provider";
 import "./globals.css";
 
 const inter = Inter({
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
 const fontVars = `${inter.variable} ${barlow.variable}`;
 
 const bodyClass =
-  "min-h-full flex flex-col bg-zinc-100 text-zinc-900 antialiased [font-family:var(--font-inter)]";
+  "min-h-full flex flex-col overflow-x-hidden bg-zinc-100 text-zinc-900 antialiased [font-family:var(--font-inter)]";
 
 const htmlClass = `${fontVars} h-full`;
 
@@ -39,8 +40,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={htmlClass}>
-      <body className={finalBodyClass}>{children}</body>
+    <html lang="es" className={htmlClass} suppressHydrationWarning>
+      <body className={finalBodyClass}>
+        <Provider>{children}</Provider>
+      </body>
     </html>
   );
 }

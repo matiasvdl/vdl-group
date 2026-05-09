@@ -1,261 +1,563 @@
-import { Button } from "@/components/ui/button";
+import {
+  Badge,
+  Box,
+  Button,
+  Container,
+  Flex,
+  Heading,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
+import { SiteFooter } from "@/components/store/site-footer";
+import { SiteHeader } from "@/components/store/site-header";
+import { ArrowRight, Barcode, ChevronDown, CreditCard, Printer } from "lucide-react";
+import Link from "next/link";
 
-const nav = ["PC Parts", "Laptops", "Peripherals", "Monitors", "Deals"];
-
-const featuredTiles = [
-  { title: "Processors", subtitle: "Elite multi-core performance" },
-  { title: "GPUs", subtitle: "Unrivaled visuals" },
-  { title: "Monitors", subtitle: "Ultra-High Refresh" },
+const categories = [
+  {
+    icon: Barcode,
+    title: "Captura de datos",
+    text: "Lectores de código, terminales móviles, impresoras de etiquetas y consumibles para operación en terreno.",
+    accent: "#0f766e",
+    href: "/catalogo",
+  },
+  {
+    icon: CreditCard,
+    title: "Punto de venta",
+    text: "Hardware POS para comercio, bodega y caja: terminales, cajones monederos, displays y kits completos.",
+    accent: "#4f46e5",
+    href: "/catalogo",
+  },
+  {
+    icon: Printer,
+    title: "Impresión",
+    text: "Impresoras térmicas, de etiquetas, multifuncionales e insumos para procesos comerciales y logísticos.",
+    accent: "#b45309",
+    href: "/catalogo",
+  },
 ];
 
-const products = [
-  {
-    tag: "NEW",
-    category: "PERIPHERALS",
-    name: "Tactile-X Pro Mechanical Gaming Keyboard",
-    price: "$129.99",
-    oldPrice: "",
-  },
-  {
-    tag: "",
-    category: "CASES",
-    name: "Phantom Flow Airflow ATX Case - Matte Black",
-    price: "$89.00",
-    oldPrice: "",
-  },
-  {
-    tag: "",
-    category: "AUDIO",
-    name: "SonicEdge H5 Wireless Surround Sound Headset",
-    price: "$199.99",
-    oldPrice: "",
-  },
-  {
-    tag: "SALE",
-    category: "STORAGE",
-    name: "Velocity NVMe Gen4 2TB Internal SSD",
-    price: "$145.00",
-    oldPrice: "$179.00",
-  },
+const brands = [
+  "Zebra",
+  "Honeywell",
+  "Datalogic",
+  "Epson",
+  "Bixolon",
+  "Star Micronics",
+  "Bematech",
 ];
 
-const footerCols = [
+const quoteRows = [
+  { name: "Lector código de barras", qty: "5" },
+  { name: "Impresora térmica POS", qty: "10" },
+  { name: "Terminal punto de venta", qty: "3" },
+];
+
+const faqs = [
   {
-    title: "TIENDA",
-    items: ["Graphics Cards", "Processors", "Motherboards", "Storage Solutions"],
+    q: "¿Por qué no muestran precios en el sitio?",
+    a: "Los precios cambian a diario por variación del dólar, disponibilidad de stock y volumen del pedido. Cotizar al momento garantiza un valor exacto y actualizado, sin sorpresas para tu empresa.",
   },
   {
-    title: "SUPPORT",
-    items: ["Customer Support", "Shipping Policy", "Returns & Warranty", "Technical Services"],
+    q: "¿Cuánto demoran en responder una cotización?",
+    a: "Entre 24 y 48 horas hábiles desde recibida la solicitud. Si necesitas una respuesta más rápida, indícalo en el mensaje y priorizamos tu caso.",
+  },
+  {
+    q: "¿Qué incluye la cotización formal?",
+    a: "Disponibilidad y stock, plazo de entrega, valor en CLP y USD, formas de pago aceptadas, condiciones de garantía y la validez del documento.",
+  },
+  {
+    q: "¿Realizan despacho a todo Chile?",
+    a: "Sí. Coordinamos despachos a Santiago y regiones según peso, urgencia y volumen del pedido. El costo de envío se incluye dentro de la misma cotización.",
+  },
+  {
+    q: "¿Qué formas de pago aceptan?",
+    a: "Transferencia electrónica y depósito. Para empresas, previa evaluación comercial, también ofrecemos factura a 30 días.",
+  },
+  {
+    q: "¿Los productos tienen garantía?",
+    a: "Sí. Todos los productos cuentan con garantía oficial del fabricante. Validamos el plazo y el alcance de cobertura antes de emitir la cotización.",
   },
 ];
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#e9e9ea] text-white">
-      <header className="border-b border-white/10 bg-[#05070d]">
-        <div className="mx-auto flex h-16 w-full max-w-[1180px] items-center gap-6 px-5">
-          <p className="min-w-36 text-2xl font-extrabold tracking-tight">VDLGROUP</p>
-          <nav className="hidden items-center gap-6 text-sm text-white/80 lg:flex">
-            {nav.map((item) => (
-              <a key={item} href="#" className="hover:text-white">
-                {item}
-              </a>
-            ))}
-          </nav>
-          <div className="ml-auto hidden items-center gap-6 lg:flex">
-            <div className="relative">
-              <svg
-                viewBox="0 0 24 24"
-                className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-white/60"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <circle cx="11" cy="11" r="7" />
-                <path d="m20 20-3.5-3.5" />
-              </svg>
-              <input
-                className="h-10 w-[360px] rounded-2xl border border-white/20 bg-white/10 pl-12 pr-4 text-sm text-white placeholder:text-white/40 outline-none"
-                placeholder="Search hardware..."
-              />
-            </div>
-            <button className="text-white/90" aria-label="Cuenta">
-              <svg
-                viewBox="0 0 24 24"
-                className="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="12" cy="8" r="3.2" />
-                <path d="M4.5 19.2c1.9-3.2 4.5-4.8 7.5-4.8s5.6 1.6 7.5 4.8" />
-              </svg>
-            </button>
-            <button className="relative text-white/90" aria-label="Carrito">
-              <svg
-                viewBox="0 0 24 24"
-                className="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="9" cy="20" r="1.4" />
-                <circle cx="18" cy="20" r="1.4" />
-                <path d="M3.5 4h2.4l2.1 10.4h10.2l2-7.2H7.1" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </header>
+    <Box minH="100vh" bg="#eef0f3" color="#11151c">
+      <SiteHeader />
 
-      <main className="mx-auto w-full max-w-[1180px] px-5 py-6 text-[#111318]">
-        <section className="relative overflow-hidden rounded-xl bg-[#0a0f19] p-6 text-white">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(90,120,255,.25),transparent_40%),radial-gradient(circle_at_30%_70%,rgba(0,220,255,.2),transparent_45%)]" />
-          <div className="relative z-10 max-w-md py-6">
-            <p className="inline-flex rounded-full bg-white px-4 py-1 text-xs font-semibold text-black">
-              LIMITED OFFER
-            </p>
-            <h1 className="mt-4 text-3xl font-semibold leading-tight">Next-Gen Gaming At Your Fingertips</h1>
-            <p className="mt-4 text-base leading-relaxed text-white/75">
-              Experience raw power with the new RTX 40-Series laptops. Engineering perfection
-              meets uncompromised performance.
-            </p>
-            <Button className="mt-6 h-10 rounded-lg bg-white px-6 text-sm text-black hover:bg-zinc-200">
-              SHOP GAMING LAPTOPS
-            </Button>
-          </div>
-          <div className="pointer-events-none absolute right-0 top-0 h-full w-2/3 bg-[linear-gradient(120deg,transparent,rgba(115,20,74,.35),rgba(0,140,170,.35))]" />
-        </section>
+      <Box as="main">
+      <Container maxW="1180px" px={{ base: 4, md: 5 }} py={{ base: 5, md: 8 }}>
+        <Box
+          overflow="hidden"
+          rounded="2xl"
+          bg="#0b1018"
+          color="white"
+          position="relative"
+          minH={{ base: "560px", lg: "480px" }}
+          px={{ base: 5, md: 8, lg: 10 }}
+          py={{ base: 8, md: 10 }}
+        >
+          <Box
+            position="absolute"
+            inset="0"
+            bg="radial-gradient(circle at 78% 32%, rgba(22, 163, 174, .34), transparent 32%), radial-gradient(circle at 52% 58%, rgba(88, 58, 140, .34), transparent 38%)"
+          />
 
-        <section className="mt-6 grid gap-4 md:grid-cols-12">
-          <article className="relative overflow-hidden rounded-xl bg-[#0d111a] p-5 text-white md:col-span-6">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_35%,rgba(255,255,255,.08),transparent_45%)]" />
-            <p className="relative mt-20 text-2xl">{featuredTiles[0].title}</p>
-            <p className="relative text-base text-white/70">{featuredTiles[0].subtitle}</p>
-          </article>
-          <article className="relative overflow-hidden rounded-xl bg-[#0d111a] p-5 text-white md:col-span-3">
-            <p className="relative mt-20 text-2xl">{featuredTiles[1].title}</p>
-            <p className="relative text-base text-white/70">{featuredTiles[1].subtitle}</p>
-          </article>
-          <article className="relative overflow-hidden rounded-xl bg-[#0d111a] p-5 text-white md:col-span-3">
-            <p className="relative mt-20 text-2xl">{featuredTiles[2].title}</p>
-            <p className="relative text-base text-white/70">{featuredTiles[2].subtitle}</p>
-          </article>
-        </section>
-
-        <section className="mt-8">
-          <div className="mb-3 flex items-end justify-between">
-            <div>
-              <h2 className="text-3xl font-semibold text-[#12141a]">New Arrivals</h2>
-              <p className="text-base text-[#444a57]">The latest hardware just landed in our warehouse.</p>
-            </div>
-            <a href="#" className="text-base text-[#202431]">
-              View All New Arrivals
-            </a>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {products.map((product) => (
-              <article key={product.name} className="rounded-xl bg-[#161922] p-3.5 text-white">
-                <div className="rounded-lg bg-[#0b0d13] p-2">
-                  <div className="mb-2 min-h-8">
-                    {product.tag ? (
-                      <span className="rounded-full bg-white/15 px-3 py-1 text-xs">{product.tag}</span>
-                    ) : null}
-                  </div>
-                  <div className="h-40 rounded-lg bg-[radial-gradient(circle,rgba(255,255,255,.16),rgba(0,0,0,.4))]" />
-                </div>
-                <p className="mt-4 text-xs tracking-[0.2em] text-white/60">{product.category}</p>
-                <h3 className="mt-2 min-h-14 text-xl leading-tight">{product.name}</h3>
-                <div className="mt-3 flex items-end gap-2">
-                  <p className="text-2xl font-semibold">{product.price}</p>
-                  {product.oldPrice ? (
-                    <p className="pb-1 text-sm text-white/40 line-through">{product.oldPrice}</p>
-                  ) : null}
-                </div>
-                <Button className="mt-4 h-10 w-full rounded-lg bg-white/10 text-base hover:bg-white/20">
-                  Add to Cart
+          <Flex
+            position="relative"
+            zIndex="1"
+            direction={{ base: "column", lg: "row" }}
+            gap={{ base: 10, lg: 10 }}
+            align={{ lg: "center" }}
+          >
+            <Box maxW="580px">
+              <Badge rounded="full" bg="white" color="#11151c" px="3" py="1">
+                Plataforma de cotización
+              </Badge>
+              <Heading
+                as="h1"
+                mt="5"
+                fontSize={{ base: "4xl", md: "5xl", lg: "6xl" }}
+                lineHeight="0.95"
+                letterSpacing="-0.04em"
+              >
+                Equipamiento tecnológico para operar mejor
+              </Heading>
+              <Text
+                mt="5"
+                maxW="520px"
+                color="whiteAlpha.800"
+                fontSize={{ base: "md", md: "lg" }}
+                lineHeight="1.8"
+              >
+                Cotiza productos para captura de datos, punto de venta, impresión e infraestructura
+                con asesoría comercial y validación técnica.
+              </Text>
+              <Flex mt="7" gap="3" wrap="wrap">
+                <Button asChild h="11" bg="white" color="#11151c" _hover={{ bg: "#e4e4e7" }}>
+                  <Link href="/catalogo">
+                    Ver catálogo
+                    <ArrowRight size={16} />
+                  </Link>
                 </Button>
-              </article>
-            ))}
-          </div>
-        </section>
+                <Button
+                  asChild
+                  h="11"
+                  variant="outline"
+                  borderColor="whiteAlpha.300"
+                  color="white"
+                  _hover={{ bg: "whiteAlpha.100" }}
+                >
+                  <Link href="/catalogo">Solicitar cotización</Link>
+                </Button>
+              </Flex>
+            </Box>
 
-        <section className="mt-8 grid gap-4 lg:grid-cols-2">
-          <article className="rounded-xl bg-[#222631] p-6 text-white">
-            <p className="text-2xl">Precision Powered by Intel</p>
-            <p className="mt-4 text-base leading-relaxed text-white/75">
-              Our partnership with Intel brings you the latest 14th Gen Hybrid Architecture
-              processors, optimized for the most demanding workloads and gaming scenarios.
-            </p>
-            <div className="mt-8 flex gap-3">
-              <Button variant="outline" className="h-10 rounded-lg border-white/50 text-white">
-                Learn More
-              </Button>
-              <Button className="h-10 rounded-lg bg-white text-black hover:bg-zinc-200">
-                Explore Chips
-              </Button>
-            </div>
-          </article>
-          <article className="rounded-xl bg-[#131720] p-6 text-white">
-            <p className="text-sm tracking-[0.2em] text-white/60">TECH INSIGHTS</p>
-            <h3 className="mt-4 text-3xl leading-tight">Building Your First PC? 2024 Guide</h3>
-            <p className="mt-4 text-base leading-relaxed text-white/75">
-              Everything you need to know about component compatibility, thermal management, and
-              cable organization for your next dream build.
-            </p>
-            <a href="#" className="mt-6 inline-block text-base text-white">
-              Read the Full Guide →
-            </a>
-          </article>
-        </section>
-      </main>
-
-      <footer className="mt-8 bg-[#05070d] text-white">
-        <div className="mx-auto grid w-full max-w-[1180px] gap-8 px-5 py-12 md:grid-cols-4">
-          <div>
-            <p className="text-2xl font-extrabold">VDLGROUP</p>
-            <p className="mt-4 text-base text-white/70">
-              Precision-engineered for performance. Your ultimate destination for professional
-              hardware.
-            </p>
-            <p className="mt-6 text-xl text-white/80">◎   ↗   ✉</p>
-          </div>
-          {footerCols.map((col) => (
-            <div key={col.title}>
-              <p className="text-sm tracking-[0.2em] text-white/65">{col.title}</p>
-              <ul className="mt-4 space-y-3 text-base text-white/80">
-                {col.items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-          <div>
-            <p className="text-sm tracking-[0.2em] text-white/65">NEWSLETTER</p>
-            <p className="mt-4 text-base text-white/80">Get early access to tech deals and releases.</p>
-            <div className="mt-6 flex gap-2">
-              <input
-                className="h-12 flex-1 rounded-xl border border-white/15 bg-white/5 px-4 text-white placeholder:text-white/40"
-                placeholder="Dirección de correo"
+            <Box ml={{ lg: "auto" }} w={{ base: "full", lg: "380px" }} position="relative">
+              <Box
+                position="absolute"
+                inset="0"
+                rounded="xl"
+                bg="whiteAlpha.100"
+                borderWidth="1px"
+                borderColor="whiteAlpha.200"
+                transform="rotate(-3deg) translate(-10px, 8px)"
+                display={{ base: "none", sm: "block" }}
               />
-              <Button className="h-12 rounded-xl bg-white px-6 text-black hover:bg-zinc-200">
-                ENVIAR
+              <Box
+                position="relative"
+                rounded="xl"
+                bg="white"
+                color="#141821"
+                overflow="hidden"
+                boxShadow="0 30px 60px rgba(0,0,0,0.45)"
+              >
+                <Flex
+                  justify="space-between"
+                  align="center"
+                  px="5"
+                  pt="5"
+                  pb="4"
+                  borderBottomWidth="1px"
+                  borderColor="#e5e7ec"
+                >
+                  <Box>
+                    <Text
+                      fontSize="10px"
+                      fontWeight="bold"
+                      textTransform="uppercase"
+                      letterSpacing="0.18em"
+                      color="#7b8491"
+                    >
+                      Cotización
+                    </Text>
+                    <Text mt="1" fontSize="sm" fontWeight="bold" color="#11151c" className="font-mono">
+                      VDL-2026-0142
+                    </Text>
+                  </Box>
+                  <Badge
+                    bg="#0f766e"
+                    color="white"
+                    rounded="full"
+                    px="3"
+                    py="1"
+                    fontSize="10px"
+                    textTransform="uppercase"
+                    letterSpacing="0.12em"
+                  >
+                    Oficial
+                  </Badge>
+                </Flex>
+
+                <Box px="5" pt="4" pb="3">
+                  <Text
+                    fontSize="10px"
+                    textTransform="uppercase"
+                    letterSpacing="0.16em"
+                    color="#7b8491"
+                  >
+                    Cliente
+                  </Text>
+                  <Text mt="1" fontSize="sm" fontWeight="semibold" color="#11151c">
+                    Empresa demo SpA
+                  </Text>
+                </Box>
+
+                <Box px="5">
+                  <Flex justify="space-between" pb="2" borderBottomWidth="1px" borderColor="#e5e7ec">
+                    <Text
+                      fontSize="10px"
+                      fontWeight="bold"
+                      textTransform="uppercase"
+                      letterSpacing="0.16em"
+                      color="#7b8491"
+                    >
+                      Ítem
+                    </Text>
+                    <Text
+                      fontSize="10px"
+                      fontWeight="bold"
+                      textTransform="uppercase"
+                      letterSpacing="0.16em"
+                      color="#7b8491"
+                    >
+                      Cant
+                    </Text>
+                  </Flex>
+                  {quoteRows.map((row) => (
+                    <Flex
+                      key={row.name}
+                      justify="space-between"
+                      align="center"
+                      py="2.5"
+                      borderBottomWidth="1px"
+                      borderColor="#f1f3f5"
+                      fontSize="sm"
+                      _last={{ borderBottomWidth: 0 }}
+                    >
+                      <Text color="#303846">{row.name}</Text>
+                      <Text fontWeight="semibold" color="#11151c">
+                        {row.qty}
+                      </Text>
+                    </Flex>
+                  ))}
+                </Box>
+
+                <Box px="5" py="4" mt="2" bg="#fafbfc" borderTopWidth="1px" borderColor="#e5e7ec">
+                  <Flex justify="space-between" align="center">
+                    <Box>
+                      <Text
+                        fontSize="10px"
+                        fontWeight="bold"
+                        textTransform="uppercase"
+                        letterSpacing="0.16em"
+                        color="#7b8491"
+                      >
+                        Total
+                      </Text>
+                      <Text mt="1" fontSize="md" fontWeight="bold" color="#11151c">
+                        USD bajo cotización
+                      </Text>
+                    </Box>
+                    <Box
+                      rounded="full"
+                      bg="#11151c"
+                      color="white"
+                      px="3"
+                      py="1.5"
+                      fontSize="11px"
+                      fontWeight="semibold"
+                    >
+                      Respuesta 24-48 hrs
+                    </Box>
+                  </Flex>
+                </Box>
+              </Box>
+            </Box>
+          </Flex>
+        </Box>
+
+        <Box id="soluciones" mt={{ base: 10, md: 14 }}>
+          <Box mb="5" maxW="640px">
+            <Heading as="h2" fontSize={{ base: "3xl", md: "4xl" }} letterSpacing="-0.03em">
+              Soluciones para cada operación
+            </Heading>
+            <Text mt="2" color="#5d6572" lineHeight="1.7">
+              Tres líneas de producto para cubrir captura, venta e impresión, con asesoría
+              comercial y validación técnica.
+            </Text>
+          </Box>
+
+          <SimpleGrid columns={{ base: 1, md: 3 }} gap="4">
+            {categories.map((cat) => {
+              const Icon = cat.icon;
+
+              return (
+                <Link key={cat.title} href={cat.href} className="block h-full">
+                  <Box
+                    rounded="2xl"
+                    bg="white"
+                    borderWidth="1px"
+                    borderColor="#d8dbe2"
+                    p="6"
+                    h="full"
+                    boxShadow="0 8px 24px rgba(17,21,28,0.04)"
+                    transition="all .22s ease"
+                    _hover={{
+                      transform: "translateY(-4px)",
+                      borderColor: "#aab2bf",
+                      boxShadow: "0 18px 42px rgba(17,21,28,0.10)",
+                    }}
+                  >
+                    <Box
+                      w="48px"
+                      h="48px"
+                      rounded="xl"
+                      bg={`${cat.accent}1A`}
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Icon size={22} color={cat.accent} />
+                    </Box>
+                    <Heading as="h3" mt="5" fontSize="xl">
+                      {cat.title}
+                    </Heading>
+                    <Text mt="2" color="#5d6572" lineHeight="1.7" fontSize="sm">
+                      {cat.text}
+                    </Text>
+                    <Flex
+                      mt="5"
+                      align="center"
+                      gap="2"
+                      color="#11151c"
+                      fontWeight="semibold"
+                      fontSize="sm"
+                    >
+                      Ver productos
+                      <ArrowRight size={14} />
+                    </Flex>
+                  </Box>
+                </Link>
+              );
+            })}
+          </SimpleGrid>
+        </Box>
+      </Container>
+
+      <Box bg="#e7eaee" borderTopWidth="1px" borderColor="#d8dbe2" mt={{ base: 10, md: 14 }}>
+        <Container maxW="1180px" px={{ base: 4, md: 5 }} py={{ base: 10, md: 14 }}>
+        <Box id="faq">
+          <Flex direction={{ base: "column", lg: "row" }} gap={{ base: 6, lg: 16 }} align="start">
+            <Box flexShrink={0} w={{ base: "full", lg: "300px" }}>
+              <Text
+                fontSize="xs"
+                fontWeight="bold"
+                textTransform="uppercase"
+                letterSpacing="0.2em"
+                color="#7b8491"
+              >
+                Preguntas frecuentes
+              </Text>
+              <Heading
+                as="h2"
+                mt="3"
+                fontSize={{ base: "2xl", md: "3xl" }}
+                letterSpacing="-0.03em"
+                lineHeight="1.1"
+              >
+                Lo que más nos preguntan
+              </Heading>
+              <Text mt="3" color="#5d6572" fontSize="sm" lineHeight="1.7">
+                Resolvemos las consultas más comunes sobre cotizaciones, despacho y formas de pago.
+              </Text>
+            </Box>
+
+            <Flex direction="column" gap="2.5" flex="1" w={{ base: "full" }} maxW={{ lg: "780px" }}>
+              {faqs.map((faq) => (
+                <Box
+                  as="details"
+                  key={faq.q}
+                  bg="white"
+                  rounded="xl"
+                  borderWidth="1px"
+                  borderColor="#e5e7ec"
+                  transition="border-color .15s ease"
+                  _hover={{ borderColor: "#d2d6dc" }}
+                  _open={{ borderColor: "#11151c" }}
+                  className="group"
+                >
+                  <Box
+                    as="summary"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    gap="4"
+                    cursor="pointer"
+                    listStyleType="none"
+                    px="5"
+                    py="3.5"
+                    className="[&::-webkit-details-marker]:hidden"
+                  >
+                    <Text
+                      fontSize={{ base: "sm", md: "md" }}
+                      fontWeight="semibold"
+                      color="#11151c"
+                    >
+                      {faq.q}
+                    </Text>
+                    <Box
+                      as="span"
+                      color="#9ca3af"
+                      flexShrink="0"
+                      transition="transform 0.2s ease"
+                      className="group-open:rotate-180"
+                    >
+                      <ChevronDown size={16} />
+                    </Box>
+                  </Box>
+                  <Box px="5" pb="4">
+                    <Text fontSize="sm" color="#5d6572" lineHeight="1.7">
+                      {faq.a}
+                    </Text>
+                  </Box>
+                </Box>
+              ))}
+            </Flex>
+          </Flex>
+        </Box>
+
+        <Box
+          id="marcas"
+          mt={{ base: 10, md: 14 }}
+          pt={{ base: 10, md: 14 }}
+          borderTopWidth="1px"
+          borderColor="#d8dbe2"
+        >
+          <Text
+            fontSize="xs"
+            fontWeight="bold"
+            textTransform="uppercase"
+            letterSpacing="0.2em"
+            color="#7b8491"
+            textAlign="center"
+          >
+            Trabajamos con marcas líderes del rubro
+          </Text>
+          <Flex
+            mt="5"
+            wrap="wrap"
+            justify="center"
+            align="center"
+            rowGap="4"
+            columnGap={{ base: 6, md: 10 }}
+            opacity="0.7"
+          >
+            {brands.map((brand) => (
+              <Text
+                key={brand}
+                fontFamily="var(--font-barlow)"
+                fontSize={{ base: "lg", md: "xl" }}
+                fontWeight="bold"
+                color="#5d6572"
+                letterSpacing="-0.02em"
+              >
+                {brand}
+              </Text>
+            ))}
+          </Flex>
+        </Box>
+        </Container>
+      </Box>
+
+      <Box
+        bg="#0b1018"
+        color="white"
+        position="relative"
+        overflow="hidden"
+      >
+        <Box
+          position="absolute"
+          inset="0"
+          bg="radial-gradient(circle at 20% 30%, rgba(22, 163, 174, .28), transparent 35%), radial-gradient(circle at 80% 70%, rgba(88, 58, 140, .28), transparent 35%)"
+        />
+        <Container
+          maxW="1180px"
+          px={{ base: 4, md: 5 }}
+          py={{ base: 12, md: 16 }}
+          position="relative"
+          zIndex="1"
+        >
+          <Flex
+            direction={{ base: "column", md: "row" }}
+            align={{ md: "center" }}
+            justify="space-between"
+            gap={{ base: 6, md: 8 }}
+          >
+            <Box maxW="640px">
+              <Heading
+                as="h2"
+                fontSize={{ base: "3xl", md: "4xl" }}
+                letterSpacing="-0.03em"
+                lineHeight="1.05"
+              >
+                ¿Tienes un proyecto en mente?
+              </Heading>
+              <Text
+                mt="4"
+                color="whiteAlpha.800"
+                fontSize={{ base: "md", md: "lg" }}
+                lineHeight="1.7"
+              >
+                Cuéntanos qué necesitas y te entregamos una cotización formal con disponibilidad,
+                plazos y condiciones comerciales.
+              </Text>
+            </Box>
+            <Flex gap="3" wrap="wrap">
+              <Button asChild h="12" px="6" bg="white" color="#11151c" _hover={{ bg: "#e4e4e7" }}>
+                <Link href="/catalogo">
+                  Solicitar cotización
+                  <ArrowRight size={16} />
+                </Link>
               </Button>
-            </div>
-          </div>
-        </div>
-        <div className="border-t border-white/10 py-5 text-center text-sm text-white/50">
-          © 2024 TECHGEAR HARDWARE SOLUTIONS. PRECISION-ENGINEERED FOR PERFORMANCE.
-        </div>
-      </footer>
-    </div>
+              <Button
+                asChild
+                h="12"
+                px="6"
+                variant="outline"
+                borderColor="whiteAlpha.300"
+                color="white"
+                _hover={{ bg: "whiteAlpha.100" }}
+              >
+                <Link href="/catalogo">Ver catálogo</Link>
+              </Button>
+            </Flex>
+          </Flex>
+        </Container>
+      </Box>
+      </Box>
+
+      <SiteFooter />
+    </Box>
   );
 }
